@@ -1,0 +1,39 @@
+program: |
+  python research/fine_tune_llm_w_qlora/fine-tune-dp.py \
+        --output_dir outputs \
+        --model_name gpt2  \
+        --dataset_name sst2 \
+        --sequence_len 128 \
+        --per_device_train_batch_size 16 \
+        --gradient_accumulation_steps 16 \
+        --evaluation_strategy no \
+        --save_strategy no \
+        --log_level info \
+        --per_device_eval_batch_size 16 \
+        --eval_accumulation_steps 1 \
+        --seed 42 \
+        --target_delta 1e-5 \
+        --per_sample_max_grad_norm 1.0 \
+        --weight_decay 0.01 \
+        --remove_unused_columns False \
+        --logging_steps 5 \
+        --max_grad_norm 0 \
+        --lr_scheduler_type constant \
+        --learning_rate 1e-4 \
+        --disable_tqdm True \
+        --dataloader_num_workers 2 \
+        --lora_dim 4 \
+        --lora_alpha 32 \
+        --lora_dropout 0.0 \
+        --enable_lora \
+        --label_names labels \
+        --num_train_epochs 3 \
+
+parameters:
+  target_epsilon:
+    values:
+      - 4.0
+      - 3.25
+      - 2.75
+      - 2.00
+      - 1.50
